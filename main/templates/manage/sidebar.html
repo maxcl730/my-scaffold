@@ -1,0 +1,45 @@
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="header">功能导航</li>
+                <li>
+                    <a href="{{ url_for('manage.index') }}">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-send"></i>
+                        <span>申请管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage.index')}}"><i class="fa fa-circle-o"></i> 申请列表</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>会员管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage_member.list_member') }}"><i class="fa fa-circle-o"></i> 会员列表</a></li>
+                        <li><a href="{{ url_for('manage_member.blocked_member') }}"><i class="fa fa-circle-o"></i> 黑名单用户</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span>系统管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage_system.list_user') }}"><i class="fa fa-circle-o"></i> 系统用户</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>

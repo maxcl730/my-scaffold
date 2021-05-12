@@ -1,0 +1,75 @@
+{% extends "manage/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}首页Banner{% endblock %}
+
+{% block function_title %}
+      <h1>首页Banner</h1>
+{% endblock %}
+
+{% include 'manage/message.html' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <!-- form start -->
+                <form action="{{ url_for('manage_homepage.new_banner') }}" method="post" class="form-horizontal" role="form" enctype="multipart/form-data">
+                    {{ form.csrf_token() }}
+                    {{ wtf.form_errors(form, hiddens="only") }}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="click" class="col-sm-2 control-label">
+                                {{ form.click.label.text }}
+                            </label>
+                            <div class="col-sm-6">
+                                {{ form.click }}
+                            </div>
+                            <span class="help-block">
+                                <i class="fa fa-info-circle"></i>&nbsp;选填，必须是 https:// 开头
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="thumb_image" class="col-sm-2 control-label asterisk">
+                                {{ form.image.label.text }}
+                            </label>
+                            <div class="col-sm-4 upload-wrapper">
+                                {% if banner_image %}
+                                    <img class="upload-thumbnail" style="width: 100%; padding-bottom: 10px" src="{{ banner_image }}">
+                                    <br/>
+                                    <span class="upload-delete"></span>
+                                {% endif %}
+                                <button type="button" class="btn btn-block btn-default upload-btn" upload-data="{exts: 'jpg|png|jpeg', accept: 'images', size: 1024, width: 730, height: 730 }">上传图片</button>
+                                <span class="help-block">
+                                    <i class="fa fa-info-circle"></i>宽730 高730，jpg/png/jpeg/gif
+                                </span>
+                                {{ form.image(value=banner_image) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer ">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-6">
+                            {{ form.submit }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ makeup_static_url('plugins/jQuery/upload.js') }}"></script>
+    <script>
+    $(function(){
+        //初始化上传
+        $.upload({
+            url: "{{ url_for('manage.summernote') }}",
+            wrapper: ".upload-wrapper"
+        });
+
+    })
+    </script>
+{% endblock %}

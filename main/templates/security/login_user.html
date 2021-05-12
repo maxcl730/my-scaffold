@@ -1,0 +1,54 @@
+{% from "security/_macros.html" import render_field, render_field_with_errors, render_checkbox_field %}
+{% include "security/_messages.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Management login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/iCheck/square/blue.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/pace/pace.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/adminlte/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='plugins/adminlte/css/skins/skin-blue.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <!--[if lt IE 9]>
+    <script src="plugins/html5shiv.min.js"></script>
+    <script src="plugins/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+    <div class="login-logo">
+        <b>{{ _fsdomain("Management System") }}</b>
+    </div>
+    <div class="login-box-body">
+        <p class="login-box-msg">{{ _fsdomain("Login") }}</p>
+        <form action="{{ url_for_security('login') }}" method="POST" name="login_user_form">
+            {{ login_user_form.hidden_tag() }}
+            {{ render_field_with_errors(login_user_form.email) }}
+            {{ render_field_with_errors(login_user_form.password) }}
+            {{ render_checkbox_field(login_user_form.remember) }}
+            {{ render_field(login_user_form.next) }}
+            {{ render_field(login_user_form.submit, class="btn btn-primary") }}
+        </form>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/iCheck/icheck.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/pace/pace.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/global.js') }}"></script>
+<script>
+    function initPage() {
+        //初始化iCheck插件
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%' // optional
+        });
+    }
+</script>
+</body>
+</html>

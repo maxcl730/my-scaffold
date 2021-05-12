@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    {% block head %}{% endblock %}
+    <title>管理后台 | {% block title %}标题{% endblock %}</title>
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/ionicons/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/bootstrap-slider/slider.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/pace/pace.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/bootstrap-switch/bootstrap-switch.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/select2/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/adminlte/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/adminlte/css/skins/skin-blue.min.css') }}">
+    <link rel="stylesheet" href="{{ makeup_static_url('css/global.css') }}">
+    {% block css %}{% endblock %}
+    <!--[if lt IE 9]>
+    <script src="plugins/html5shiv.min.js"></script>
+    <script src="plugins/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--头部-->
+    <header class="main-header">
+        <a href="{{ url_for('manage.index') }}" class="logo">
+            <span class="logo-mini"><b>管</b></span>
+            <span class="logo-lg"><b>管理后台</b></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                      <li>  <a class="nav-item nav-link" href="{{ url_for('security.logout') }}"> Logout</a></li>
+                      <li> <a class="nav-item nav-link" href=""
+                             target="_blank">Help</a></li>
+                    </ul>
+                    <form class="navbar-form navbar-right">
+                      <input type="text" class="form-control" placeholder="Search...">
+                    </form>
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="{{ makeup_static_url('images/avatar.jpg') }}" class="user-image"
+                                     alt="User Image">
+                                <span class="hidden-xs">{{current_user.username}}</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="user-header">
+                                    <img src="{{ makeup_static_url('images/avatar.jpg') }}"
+                                         class="img-circle" alt="User Image">
+                                    <p>
+                                        <span>{{current_user.name}}</span>
+                                        <small>{{current_user.email}}</small>
+                                    </p>
+                                </li>
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="{{ url_for('security.change_password') }}" class="btn btn-default btn-flat">修改密码</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="{{ url_for('security.logout') }}" class="btn btn-default btn-flat">退出登录</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!--侧边栏-->
+    {% include "manage/sidebar.html" %}
+
+    <div class="content-wrapper">
+        <!--导航栏-->
+        <section class="content-header">
+            {% block navbar %}{% endblock %}
+        </section>
+        <section class="content-header">
+            {% block function_title %}{% endblock %}
+        </section>
+        <!--正文-->
+        <section class="content">
+            {% block content %}{% endblock %}
+        </section>
+    </div>
+    <!--页脚-->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>版本号</b> 1.0.0
+        </div>
+        Copyright &copy; 2021 Beijing
+    </footer>
+    <!--模态窗口-->
+    <div class="modal-wrapper">
+        <div id="alert-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--<span aria-hidden="true">&times;</span></button>-->
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        提示内容
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left btn-no" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default btn-yes" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{{ makeup_static_url('plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/slimScroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/fastclick/fastclick.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/bootstrap-slider/bootstrap-slider.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/pace/pace.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/bootstrap-switch/bootstrap-switch.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/select2/select2.full.min.js') }}"></script>
+<script src="{{ makeup_static_url('plugins/adminlte/js/app.min.js') }}"></script>
+<script src="{{ makeup_static_url('js/global.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

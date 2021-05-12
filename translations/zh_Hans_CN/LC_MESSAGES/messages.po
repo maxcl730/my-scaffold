@@ -1,0 +1,43 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-05-11 19:04+0800\n"
+"PO-Revision-Date: 2021-05-11 19:04+0800\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_Hans_CN\n"
+"Language-Team: zh_Hans_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.0\n"
+
+msgid "Saturday"
+msgstr "星期六"
+
+msgid "Hello, world!"
+msgstr "你好世界"
+
+msgid "Management System"
+msgstr "管理系统"
+
+msgid "Login"
+msgstr "登录"
+
+msgid "Email Address"
+msgstr "邮箱"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "Remember Me"
+msgstr "记住我"
+
+msgid "Homepage"
+msgstr "首页"

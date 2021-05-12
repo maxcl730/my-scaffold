@@ -1,0 +1,66 @@
+{% extends "manage/base.html" %}
+{% from "manage/_macros.html" import render_pagination %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}黑名单列表{% endblock %}
+
+{% block navbar %}
+    <h1>黑名单列表</h1>
+{% endblock %}
+
+{% include 'manage/message.html' %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <form action="{{ url_for('manage_member.blocked_member') }}" method="post" class="form horizontal" role="form" name="search_form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens="only") }}
+            <div class="form-group">
+                <label class="label-sm">{{ form.nickname.label.text }}</label> {{ form.nickname }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.username.label.text }}</label> {{ form.username }} &nbsp;&nbsp;
+                <input type="submit" value="搜索" class="btn-xs"/>
+            </div>
+        </form>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>昵称</th>
+                <th>姓名</th>
+                <th>加入黑名单时间</th>
+                <th>加入黑名单理由</th>
+                <th>操作</th>
+            </tr>
+            {% for item in list.items %}
+            <tr>
+                <td>{{ item.nickname }}</td>
+                <td>{{ item.address.username }}</td>
+                <td>{{ item.updated_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td>{{ item.blocked_info }}</td>
+                <td>
+                    <a class="btn btn-primary" onclick="confirm_enable()" href="{{ url_for('manage_member.enable_member', uid=item.id) }}" >移出黑名单</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {{ render_pagination(list, 'manage_member.blocked_member') }}
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript">
+        $(function() {
+            $("a.page").on('click',function(){
+                let newUrl = $(this).attr("id");
+                //alert(newUrl);
+                $("form[name='search_form']").attr('action',newUrl);
+                $("form[name='search_form']").submit();
+            })
+        })
+        function confirm_enable(){
+            if (!confirm("确认解除？")) {  window.event.returnValue = false;  }
+        }
+    </script>
+{% endblock %}

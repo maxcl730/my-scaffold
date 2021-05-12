@@ -1,0 +1,71 @@
+{% extends "manage/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}新增账号{% endblock %}
+
+{% block function_title %}
+      <h1>新增账号</h1>
+{% endblock %}
+
+{% include 'manage/message.html' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <!-- form start -->
+                <form action="{{ url_for('manage_system.new_user') }}" method="post" class="form-horizontal" role="form">
+                    {{ form.csrf_token() }}
+                    {{ wtf.form_errors(form, hiddens="only") }}
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="email" class="col-sm-2 control-label asterisk">
+                                {{ form.email.label.text }}
+                            </label>
+                            <div class="col-sm-6">
+                                {{ form.email }}
+                            </div>
+                            <div>{{ form.email.errors.0 }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label asterisk">
+                                {{ form.name.label.text }}
+                            </label>
+                            <div class="col-sm-6">
+                                {{ form.name }}
+                            </div>
+                            <div>{{ form.name.errors.0 }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="passwd" class="col-sm-2 control-label asterisk">
+                                {{ form.passwd.label.text }}
+                            </label>
+                            <div class="col-sm-6">
+                                {{ form.passwd }}
+                            </div>
+                            <div>{{ form.passwd.errors.0 }}</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm_passwd" class="col-sm-2 control-label asterisk">
+                                {{ form.confirm_passwd.label.text }}
+                            </label>
+                            <div class="col-sm-6">
+                                {{ form.confirm_passwd }}
+                            </div>
+                            <div>{{ form.confirm_passwd.errors.0 }}</div>
+                        </div>
+                    </div>
+                    <div class="box-footer ">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-6">
+                            {{ form.submit }}
+                          &nbsp;&nbsp;<a class="btn btn-primary" href="{{ url_for('manage_system.list_user') }}" >取消</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

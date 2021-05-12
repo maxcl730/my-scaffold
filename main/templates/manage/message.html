@@ -1,0 +1,8 @@
+{% if get_flashed_messages() %}
+<div class="alert alert-info alert-dismissible col-md-3" id="alertarea">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+    {% endfor %}
+</div>
+{% endif %}

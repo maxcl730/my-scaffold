@@ -1,0 +1,63 @@
+<!-- 首页管理 -->
+<li class="treeview">
+  <a href="#">
+    <i class="fa fa-share"></i> <span>首页管理</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+    <li><a href="#"><i class="fa fa-circle-o"></i> 焦点图管理</a></li>
+    <li><a href="#"><i class="fa fa-circle-o"></i> Banner广告管理</a></li>
+  </ul>
+</li>
+
+<!-- 会员管理 -->
+<li class="treeview">
+  <a href="#">
+    <i class="fa fa-share"></i> <span>会员管理</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+    <li><a href="{{ url_for('manage_member.index') }}"><i class="fa fa-circle-o"></i> 会员列表</a></li>
+    <li><a href="#"><i class="fa fa-circle-o"></i> 助力资格列表</a></li>
+    <li><a href="#"><i class="fa fa-circle-o"></i> 邀请明细</a></li>
+  </ul>
+</li>
+
+<!-- Example -->
+<li class="treeview">
+  <a href="#">
+    <i class="fa fa-share"></i> <span>Multilevel</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+    <li>
+      <a href="#"><i class="fa fa-circle-o"></i> Level One
+        <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+      </a>
+      <ul class="treeview-menu">
+        <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+        <li>
+          <a href="#"><i class="fa fa-circle-o"></i> Level Two
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+            <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+  </ul>
+</li>

@@ -1,0 +1,83 @@
+{% extends "manage/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}焦点图管理{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/bootstrap3-editable/css/bootstrap-editable.css') }}">
+{% endblock %}
+{% block navbar %}
+    <h1>焦点图列表</h1>
+{% endblock %}
+
+ {% include 'manage/message.html' %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>顺序</th>
+                <th>标题</th>
+                <th>缩略图</th>
+                <th>操作</th>
+            </tr>
+            {% for item in list %}
+            <tr>
+                <td>
+                    {{ wtf.quick_form(item.form, action=url_for('manage_homepage.reorder_focus', focus_id=item.id), id='form_' + item.order|string) }}
+                </td>
+                <td><br/>
+                    <a href="#" id="title_{{ item.id }}">{{ item.title }}</a>
+                </td>
+                <td>
+                    {% if item.image|length > 1 %}
+                        <img style="width: 100px;" src="{{ item.image }}">
+                    {% endif %}
+                </td>
+                <td>
+                    <br/><a class="btn btn-primary btn-sm" href="{{ url_for('manage_homepage.edit_focus', focus_id=item.id) }}">编辑</a>
+                    <a class="btn btn-primary btn-sm" onclick="confirm_delete()" href="{{ url_for('manage_homepage.delete_focus', focus_id=item.id) }}" >删除</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ makeup_static_url('plugins/bootstrap3-editable/js/bootstrap-editable.min.js') }}"></script>
+    <script>
+        {% for item in list %}
+            $("#select_{{ item.order }}").change(function(){
+                //要触发的事件
+                $("#form_{{ item.order }}").submit()
+            });
+        {% endfor %}
+        function confirm_delete(){
+            if (!confirm("确认要删除焦点图？")) {  window.event.returnValue = false;  }
+        }
+        //turn to inline mode
+        $.fn.editable.defaults.mode = 'inline';
+        $.fn.editable.defaults.ajaxOptions = {type: "PUT"};
+        {% for item in list %}
+            $(function () {
+                $('#title_{{ item.id }}').editable({
+                    type: "text",                //编辑框的类型。支持text|textarea|select|date|checklist等
+                    title: "标题",              //编辑框的标题
+                    name: "title",
+                    pk: '{{ item.id }}',        //primary key of record to be updated (ID in db)
+                    url: '{{ url_for('manage_homepage.update_focus') }}',               // url to server-side script to process submitted value
+                    disabled: false,             //是否禁用编辑
+                    emptytext: "空文本",          //空值的默认文本
+                    mode: "inline",              //编辑框的模式：支持popup和inline两种模式，默认是popup
+                    validate: function (value) { //字段验证
+                        if (!$.trim(value)) {
+                            return '不能为空';
+                        }
+                    }
+                });
+
+            });
+        {% endfor %}
+    </script>
+{% endblock %}

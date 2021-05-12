@@ -1,0 +1,90 @@
+{% extends "manage/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+{% from "manage/_macros.html" import render_pagination %}
+
+{% block title %}焦点图管理{% endblock %}
+
+{% block function_title %}
+    <h1>添加焦点图</h1>
+{% endblock %}
+
+{% include 'manage/message.html' %}
+
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-info">
+                <div class="box-body">
+                    <!-- form start -->
+                    <form id="form_focus_source" name="form_focus_source" action="{{ url_for('manage_homepage.select_focus_trial') }}" method="post" class="form-horizontal" role="form">
+                        {{ form.hidden_tag() }}
+                        {{ wtf.form_errors(form, hiddens="only") }}
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="title" class="col-sm-2 control-label asterisk">
+                                    选择焦点图类型
+                                </label>
+                                <div class="col-sm-6 form-inline">
+                                    {% for type in form.focus_source %}
+                                        <div class="radio col-xs-3">
+                                        {{ type|safe }}&nbsp;{{ type.label.text }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="col-sm-8">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>标题</th>
+                                <th>操作</th>
+                            </tr>
+                            {% for item in data_list %}
+                            <tr>
+                                <td>{{ item['title'] }}</td>
+                                <td>
+                                    <a class="btn btn-primary btn-sm" href="{{ url_for('manage_homepage.add_focus_action', source_type=item['source'], source_id=item['id']) }}" >加入焦点图</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            {% if source == 'trial' %}
+                {{ render_pagination(list, 'manage_homepage.select_focus_trial') }}
+            {% endif %}
+            {% if source == 'report' %}
+                {{ render_pagination(list, 'manage_homepage.select_focus_report') }}
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block scripts %}
+    <script>
+    $(function() {
+        $("a.page").on('click',function(){
+            let newUrl = $(this).attr("id");
+            //alert(newUrl);
+            $(this).attr('href',newUrl);
+        })
+    })
+    $(document).ready(function() {
+        $("input[name='focus_source']").change(
+            function() {
+                var $selectedvalue = $("input[name='focus_source']:checked").val();
+                if ($selectedvalue == 'trial') {
+                    newUrl =  "{{ url_for('manage_homepage.select_focus_trial') }}";
+                    $("#form_focus_source").attr('action', newUrl);
+                    $("#form_focus_source").submit(); //.form为form class属性名称
+                    //alert($selectedvalue);
+                }else {
+                    newUrl =  "{{ url_for('manage_homepage.select_focus_report') }}";
+                    $("#form_focus_source").attr('action', newUrl);
+                    $("#form_focus_source").submit(); //.form为form class属性名称
+            }});});
+    </script>
+{% endblock %}

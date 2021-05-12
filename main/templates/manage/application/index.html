@@ -1,0 +1,155 @@
+{% extends "manage/base.html" %}
+{% from "manage/_macros.html" import render_pagination %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}申请管理{% endblock %}
+{% block css %}
+    <link rel="stylesheet" href="{{ makeup_static_url('plugins/datepicker/bootstrap-datepicker.min.css') }}">
+{% endblock %}
+{% block navbar %}
+    <h1>{{ navbar_title }}</h1>
+{% endblock %}
+
+{% include 'manage/message.html' %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <form action="{{ url_for('manage_application.' + filter) }}" method="post" class="form horizontal" role="form" name="search_form">
+            {{ form.hidden_tag() }}
+            {{ wtf.form_errors(form, hiddens="only") }}
+            <div class="form-group">
+                <label class="label-sm">{{ form.good_name.label.text }}</label> {{ form.good_name }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.nickname.label.text }}</label> {{ form.nickname }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.mobile.label.text }}</label> {{ form.mobile }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.province_name.label.text }}</label>{{ form.province_name }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.running_status.label.text }}</label>{{ form.running_status }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.Apply_number.label.text }}</label>{{ form.Apply_number }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.created_time_begin.label.text }}</label> {{ form.created_time_begin }} &nbsp;&nbsp;
+                <label class="label-sm">{{ form.created_time_end.label.text }}</label> {{ form.created_time_end }} &nbsp;&nbsp;
+                <input type="submit" value="搜索" class="btn-xs"/>
+            </div>
+        </form>
+    </div>
+    <div class="box-body">
+        <table class="table table-bordered">
+            <tr>
+                <td>产品名称</td>
+                <td>用户昵称</td>
+                <td>收货人信息</td>
+                <td>申请宣言</td>
+                <td>申请时间</td>
+                <td>报告及状态</td>
+                <td>最后操作时间</td>
+                <td>操作</td>
+            </tr>
+            {% for item in list.items %}
+            <tr>
+                <td>{{ item.trial.good_name }}</td>
+                <td>{{ item.member.nickname }}</td>
+                <td>{{ item.address }}</td>
+                <td>{{ item.content }}</td>
+                <td>{{ item.created_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                {% if item.report %}
+                    {% if item.report.status == 0 %}
+                        <td>未审核</td>
+                    {% endif %}
+                    {% if item.report.status == 1 %}
+                        <td>通过并发布</td>
+                    {% endif %}
+                    {% if item.report.status == 2 %}
+                        <td>不通过驳回</td>
+                    {% endif %}
+                {% else %}
+                    <td>无报告</td>
+                {% endif %}
+                <td>{{ item.updated_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>
+                    {% if item.trial_active %}
+                        活动未结束
+                    {% else %}
+                    <select class="input-sm" data-id="{{ item.id }}" name="status" style="&quot;width: 90px&quot;">
+                        {% if item.status == 0 %}
+                            <option value="0" selected>未审核</option>
+                        {% else %}
+                            <option value="0">未审核</option>
+                        {% endif %}
+                        {% if item.status == 1 %}
+                            <option value="1" selected>审核通过</option>
+                        {% else %}
+                            <option value="1">审核通过</option>
+                        {% endif %}
+                        {% if item.status == 2 %}
+                            <option value="2" selected>已发货</option>
+                        {% else %}
+                            <option value="2">已发货</option>
+                        {% endif %}
+                        {% if item.status == 4 %}
+                            <option value="4" selected>审核不通过</option>
+                        {% else %}
+                            <option value="4">审核不通过</option>
+                        {% endif %}
+                        {% if item.status == 99 %}
+                            <option value="99" selected>不显示</option>
+                        {% else %}
+                            <option value="99">不显示</option>
+                        {% endif %}
+                    </select>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% if show_download %}
+            <form action="{{ url_for('manage_application.download_application_success') }}" method="post" class="form horizontal" role="form">
+                <label class="label-sm"></label>
+                    {{ form_download.good_name }} &nbsp;&nbsp;
+                    <button class="btn-xs" id="download_excel" >下载发货名单</button>
+            </form>
+        {% endif %}
+    </div>
+    {{ render_pagination(list, 'manage_application.' + filter) }}
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{{ makeup_static_url('plugins/datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+    $(function() {
+        $('#created_time_begin').datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-cn',
+            //startDate: new Date()
+        })
+        $('#created_time_end').datepicker({
+            format: 'yyyy-mm-dd',
+            language: 'zh-cn',
+            //startDate: new Date()
+        })
+        $("a.page").on('click',function(){
+            let newUrl = $(this).attr("id");
+            //alert(newUrl);
+            $("form[name='search_form']").attr('action',newUrl);
+            $("form[name='search_form']").submit();
+        })
+        $(".box-body select").change(function(){
+            var id = $(this).attr("data-id");
+            var status = $(this).find("option:selected").val();
+            var data = JSON.stringify({
+                'id': id,
+                'status': status
+            });
+            $.ajax({
+                url: "{{ url_for('manage_application.change_application_status') }}",
+                type: 'POST',
+                dataType: "json",
+                contentType: 'application/json; charset=UTF-8',
+                data: data,
+                processData: false,
+                success: function (rs) {
+                }
+            });
+        })
+
+    })
+    </script>
+{% endblock %}

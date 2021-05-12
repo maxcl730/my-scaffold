@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>管理平台</title>
+    <link rel="stylesheet" href="../../static/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../static/plugins/ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../static/plugins/bootstrap-slider/slider.css">
+    <link rel="stylesheet" href="../../static/plugins/pace/pace.min.css">
+    <link rel="stylesheet" href="../../static/plugins/bootstrap-switch/bootstrap-switch.min.css">
+    <link rel="stylesheet" href="../../static/plugins/select2/select2.min.css">
+    <link rel="stylesheet" href="../../static/plugins/adminlte/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../static/plugins/adminlte/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="../../static/plugins/datetimepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="../../static/css/global.css">
+
+    <!-- include summernote CSS-->
+    <link href="../../static/plugins/summernote/summernote.css" rel="stylesheet">
+    
+    <!--[if lt IE 9]>
+    <script src="plugins/html5shiv.min.js"></script>
+    <script src="plugins/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <!--头部-->
+    <header class="main-header">
+        <a href="{{ url_for('manage.index') }}" class="logo">
+            <span class="logo-mini"><b>N</b></span>
+            <span class="logo-lg"><b>入手礼管理后台</b></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{{ url_for('static', filename='images/avatar.jpg') }}" class="user-image"
+                                 alt="User Image">
+                            <span class="hidden-xs">{{current_user.username}}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="{{ url_for('static', filename='images/avatar.jpg') }}"
+                                     class="img-circle" alt="User Image">
+                                <p>
+                                    <span>{{current_user.name}}</span>
+                                    <small>{{current_user.email}}</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{{ url_for('manage.index') }}" class="btn btn-default btn-flat">统计信息</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{{ url_for('security.logout') }}" class="btn btn-default btn-flat">退出登录</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!--侧边栏-->
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="{{ url_for('manage.index') }}">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-home"></i>
+                        <span>首页管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-circle-o"></i> 焦点图管理
+                            <span class="pull-right-container">
+                              <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                            </a>
+                            <ul class="treeview-menu">
+                            <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 焦点图列表</a></li>
+                            <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 添加焦点图</a></li>
+                            </ul>
+                            <li><a href="{{ url_for('manage_homepage.banner_new') }}"><i class="fa fa-circle-o"></i> Banner广告</a></li>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-gift"></i>
+                        <span>试用管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 编辑</a></li>
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 查询</a></li>
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-send"></i>
+                        <span>申请管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 编辑</a></li>
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 查询</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-bug"></i>
+                        <span>报告管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 功能点</a></li>
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 功能点</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>会员管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage_member.index') }}"><i class="fa fa-circle-o"></i> 会员列表</a></li>
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 功能点</a></li>
+                    </ul>
+                </li>
+
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-cog"></i>
+                        <span>系统管理</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 功能点</a></li>
+                        <li><a href="{{ url_for('manage.index') }}"><i class="fa fa-circle-o"></i> 功能点</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+          <h1>
+            新建试用
+          </h1>
+        </section>        
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box box-info">
+                        <!-- form start -->
+                        <form class="form-horizontal">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="try-name" class="col-sm-2 control-label asterisk">试用标题</label>
+
+                                    <div class="col-sm-6">
+                                        <input required="1"  type="input" class="form-control" id="try-name" name="try-name" placeholder="输入试用标题">
+                                    </div>
+                                    <span class="help-block">
+                                        <i class="fa fa-info-circle"></i>&nbsp;20汉字以内
+                                    </span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-name" class="col-sm-2 control-label asterisk">产品名称</label>
+                                    <div class="col-sm-6">
+                                        <input required="1" type="input" class="form-control" id="product-name" name="product-name" value="" placeholder="输入产品名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-name" class="col-sm-2 control-label asterisk">申请时间</label>
+                                    <div class="col-sm-3">
+                                        <input required="1" type="datetime" class="form-control" id="start-time" name="start-time" value="" placeholder="开始时间">
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <input required="1" type="datetime" class="form-control" id="end-time" name="end-time" value="" placeholder="结束时间">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-name" class="col-sm-2 control-label asterisk">试用规格</label>
+                                    <div class="col-sm-6">
+                                        <input type="hidden" name="type-id"/>
+                                        <select class="form-control type-id" style="width: 100%;" name="type-id" required="1" data-value="" >
+                                            <option value="">选择规格</option>
+                                            <option value="1" >正装</option>
+                                            <option value="2" >中样</option>
+                                            <option value="3" >小样</option>
+                                            <option value="4" >套装</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="product-price" class="col-sm-2 control-label asterisk">产品价格</label>
+                                    <div class="col-sm-6">
+                                        <input required="1" type="input" class="form-control" id="product-price" name="product-price" value="" placeholder="输入产品价格">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="number" class="col-sm-2 control-label asterisk">试用数量</label>
+                                    <div class="col-sm-6">
+                                        <input required="1" type="input" class="form-control" id="number" name="number" value="" placeholder="输入试用份数">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="product-pics" class="col-sm-2 control-label asterisk">轮播图</label>
+                                    <div class="col-sm-10">
+                                        <div class="col-sm-2">
+                                            <img style="width: 100%; padding-bottom: 10px" src="http://a.hiphotos.baidu.com/image/pic/item/9f510fb30f2442a7c9f10326dc43ad4bd01302b1.jpg"/>
+                                            <br/>
+                                            <span class="upload-delete"></span>
+                                            <button type="button" class="btn btn-block btn-default upload-btn">上传图片</button>
+                                            <span class="help-block">
+                                                <i class="fa fa-info-circle"></i>&nbsp;20汉字以内
+                                            </span>
+                                            <input class="upload-file" type="value" id="list-pic" name="focus-pic-1" value="">
+                                        </div>
+                                        <div class="col-sm-2 upload-wrapper">                                            
+                                            <br/>
+                                            <button type="button" class="btn btn-block btn-default upload-btn" upload-data="{exts: 'jpg|png|jpeg', accept: 'images', size: 1024, width: 350, height: 350 }">上传图片</button>
+                                            <span class="help-block">
+                                                <i class="fa fa-info-circle"></i>&nbsp;宽350 高350，jpg|png|jpeg
+                                            </span>
+                                            <input class="upload-file" type="hidden" id="list-pic" name="focus-pic-2" value="">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="product-info" class="col-sm-2 control-label asterisk">产品介绍</label>
+                                    <div class="col-sm-9">
+                                        <div id="product-info" style="width: 100%; height: 300px;">
+            
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="product-info" value=""/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="list-pic" class="col-sm-2 control-label asterisk">列表图</label>
+                                    <div class="col-sm-2 upload-wrapper">
+                                        <!--<img style="width: 100%; padding-bottom: 10px" src="http://a.hiphotos.baidu.com/image/pic/item/9f510fb30f2442a7c9f10326dc43ad4bd01302b1.jpg"/>-->
+                                        <br/>
+                                        <button type="button" class="btn btn-block btn-default upload-btn" upload-data="{exts: 'jpg|png|jpeg', accept: 'images', size: 1024, width: 350, height: 350 }">上传图片</button>
+                                        <span class="help-block">
+                                            <i class="fa fa-info-circle"></i>&nbsp;宽350 高350，jpg|png|jpeg
+                                        </span>
+                                        <input class="upload-file" type="file" name="list-pic">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer ">
+                                <div class="col-sm-2"></div> 
+                                <div class="col-sm-6">
+                                    <button type="submit" class="btn btn-info">提交</button>
+                                </div>                                
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!--页脚-->
+    <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+            <b>版本号</b> 1.0.0
+        </div>
+        Copyright &copy; 2019 <a href="http://www.si-tech.com.cn">XXXX公司</a>
+    </footer>
+    <!--模态窗口-->
+    <div class="modal-wrapper">
+        <div id="alert-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+                        <!--<span aria-hidden="true">&times;</span></button>-->
+                        <h4 class="modal-title">提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        提示内容
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left btn-no" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-default btn-yes" data-dismiss="modal">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../static/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../../static/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../static/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="../../static/plugins/fastclick/fastclick.js') }}"></script>
+<script src="../../static/plugins/bootstrap-slider/bootstrap-slider.js"></script>
+<script src="../../static/plugins/pace/pace.min.js"></script>
+<script src="../../static/plugins/bootstrap-switch/bootstrap-switch.min.js"></script>
+<script src="../../static/plugins/select2/select2.full.min.js"></script>
+<script src="../../static/plugins/adminlte/js/app.min.js"></script>
+<script src="../../static/plugins/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="../../static/plugins/summernote/summernote.min.js"></script>
+<script src="../../static/plugins/jQuery/upload.js"></script>
+<script src="../../static/js/global.js"></script>
+<script>
+$(function(){
+
+    $('#start-time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:  'zh-cn',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0,
+        weekStart: 1, 
+        startDate: new Date()
+    })
+    $('#end-time').datetimepicker({
+        format: 'yyyy-mm-dd hh:ii',
+        language:  'zh-cn',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,
+        forceParse: 0,
+        weekStart: 1, 
+        startDate: new Date()
+    })
+
+    //初始化编辑器
+    var config = { "height":300, "lang":"zh-CN" }
+
+    config.callbacks = {
+        onImageUpload: function(files) {
+            // upload image to server and create imgNode...
+            var that = this;
+            var data = new FormData();
+            data.append('file', files[0]);
+            data.append('_token', "IC6fBiGmau4uDDfOk2RwEKbmA6ByjX96BWkiHyWZ");
+
+            $.ajax({
+                url: "https:\/\/gbuy-api.mcchina.com\/backend\/admin\/image-upload",
+                type: 'post',
+                processData: false,
+                contentType: false,
+                data: data,
+                success: function (rs) {
+                    console.log(rs);
+                    if (rs.code != 1) {
+                        alert(rs.msg);
+                        return;
+                    }
+                    $(that).summernote('insertImage', rs.url);
+                }
+            });
+        }
+    }
+
+    $('#product-info').summernote( config );
+
+    //编辑器内容回写表单
+    $('#product-info').on("summernote.change", function (e) {
+        var html = $('#product-info').summernote('code');
+        $('input[name=product-info]').val(html);
+    });
+
+    //初始化上传
+    $.upload({
+        url: "http://imgsys.self.com.cn/interface",
+        wrapper: ".upload-wrapper"
+    });
+
+})
+</script>
+
+</body>
+</html>

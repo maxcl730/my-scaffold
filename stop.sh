@@ -1,0 +1,1 @@
+kill `cat /data/app/trialcenter/logs/gunicorn.pid`

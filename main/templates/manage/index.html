@@ -1,0 +1,80 @@
+{% extends "manage/base.html" %}
+
+{% block title %}首页{% endblock %}
+
+{% block navbar %}
+<section class="content-header">
+    <h1> {{ _fsdomain("Homepage") }}</h1>
+    <ol class="breadcrumb">
+        <li><i class="fa fa-dashboard"></i> 当前位置</li>
+        <li class="active">首页</li>
+    </ol>
+</section>
+{% endblock %}
+
+{% block content %}
+<div class="box box-primary">
+    <div class="box-body">
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3 id="count01"></h3>
+                        <p>今日新增会员/总会员数 </p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3 id="count02"></h3>
+                        <p>今日新增申请数</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-iphone"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3 id="count03"></h3>
+                        <p>未审核报告数</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3 id="count04"></h3>
+                        <p>活动平均/总访问量</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-ios-gear-outline"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function initPage() {
+        var jsInObj = null;
+        restTemplate("GET", "/stats/summary", jsInObj, function (jsOutObj) {
+            $("#count01").text(jsOutObj.batch_count);
+            $("#count02").text(jsOutObj.test_count);
+            $("#count03").text(jsOutObj.succ_count);
+            $("#count04").text(jsOutObj.fail_count);
+        });
+    }
+</script>
+{% endblock %}
