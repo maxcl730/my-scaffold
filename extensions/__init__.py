@@ -32,7 +32,7 @@ flask_bable = Babel()
 # flask_session = Session()
 
 # Create the Flask-bootstrap instance
-# flask_bootstrap = Bootstrap()
+flask_bootstrap = Bootstrap()
 
 # Create the Swagger instance
 swagger_config = {

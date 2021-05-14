@@ -3,9 +3,9 @@ from flask import Flask, Blueprint, redirect, url_for, request
 import pkg_resources
 from flask_restful import Api
 # from flask_debugtoolbar import DebugToolbarExtension
-from .controllers import manage  # , api
+from .controllers import manage, api as api_v1
 from .config import config
-from extensions import flask_security, user_datastore, flask_bable, swagger  # ,login_manager, flask_session, flask_bootstrap
+from extensions import flask_security, user_datastore, flask_bable, swagger, flask_bootstrap # ,login_manager, flask_session,
 from database import db
 from common import Log
 
@@ -40,16 +40,15 @@ def create_app(config_name='production'):
     flask_bable.init_app(app)
 
     # Init the Flask-bootstrap via app object
-    # flask_bootstrap.init_app(app)
+    flask_bootstrap.init_app(app)
 
     # Init the swgger via app object
     swagger.init_app(app)
 
     # Init the Flask-Restful via app object
     restful_api_bp = Blueprint('api_v1', __name__, url_prefix=app.config['API_PREFIX'] + '/v1')
-    #restful_api = Api(restful_api_bp)
-    #api.api_setup(restful_api)
-
+    restful_api = Api(restful_api_bp)
+    api_v1.api_setup(restful_api)
     app.register_blueprint(restful_api_bp)
 
     #函数模板

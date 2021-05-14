@@ -8,18 +8,6 @@ from .parser import pagination_get_perser
 from common.helper.application import ApplicationAvatars, ApplicationCount
 
 
-@cache.cached(timeout=300, key_prefix='focus')
-def get_focus():
-    # 获取焦点图
-    return Focus.objects()
-
-
-@cache.cached(timeout=300, key_prefix='banner')
-def get_banner():
-    # 获取Banner
-    return Banner.objects().first()
-
-
 class HomepageApi(Resource):
     # @cache.cached(timeout=60, key_prefix=make_cache_key)
     def get(self):
